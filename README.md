@@ -1,4 +1,4 @@
-# Secret Santa des Jeanpierz
+# Secret Santa · Noël à Morainvilliers
 
 Site statique en français, hébergé sur **GitHub Pages** : https://lesjeanpierz.github.io/secretsanta/
 
