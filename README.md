@@ -19,9 +19,9 @@ L’action utilise le générateur cryptographique de Node.js pour mélanger uni
 
 Le résultat, sa date et la liste des participants au moment du tirage sont consignés dans `public/data/election.json`. Le bouton est automatiquement désactivé dans `config.json`. Un tirage existant ne peut pas être écrasé par une deuxième exécution. L’action de publication est relancée après un tirage réussi, y compris quand le commit est créé par `GITHUB_TOKEN`.
 
-Après publication, sélectionner son prénom sur le site pour découvrir son destinataire et, le cas échéant, sa mission bonus. Il n’y a pas de nouveau tirage à chaque visite.
+Après publication, le site affiche automatiquement le récapitulatif complet : chaque donneur, son destinataire et une ligne distincte pour le deuxième cadeau bonus. Aucun choix de prénom ni bouton de découverte n’est nécessaire. Il n’y a pas de nouveau tirage à chaque visite.
 
-**Confidentialité :** le dépôt et les JSON publiés sont publics. Tous les noms et toutes les attributions sont accessibles. La sélection d’un prénom ne protège pas les résultats. Pour de vrais résultats confidentiels, prévoir une architecture avec authentification et stockage privé, en dehors d’un site GitHub Pages entièrement statique. Ne pas ajouter de coordonnées ou d’autres informations personnelles aux JSON.
+**Confidentialité :** le dépôt et les JSON publiés sont publics. Tous les noms et toutes les attributions sont accessibles. Le récapitulatif est affiché publiquement sur le site. Pour de vrais résultats confidentiels, prévoir une architecture avec authentification et stockage privé, en dehors d’un site GitHub Pages entièrement statique. Ne pas ajouter de coordonnées ou d’autres informations personnelles aux JSON.
 
 ## Nouvelle édition
 

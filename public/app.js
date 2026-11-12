@@ -41,23 +41,24 @@ try {
   $('organizer').hidden = !config.showElectionButton || election !== null;
   if (election) {
     $('draw-status').textContent = 'Tirage terminé';
-    $('exchange-description').textContent = 'Sélectionnez votre prénom pour découvrir la personne à gâter. À vous de trouver la bonne idée !';
-    $('reveal-form').hidden = false;
+    $('exchange-description').textContent = 'Les cadeaux ont trouvé leur destinataire ! Retrouvez toutes les attributions ci-dessous.';
     const names = new Map(list.map(p => [p.id, p.name]));
-    for (const person of list) { const option = document.createElement('option'); option.value = person.id; option.textContent = person.name; $('participant').append(option); }
-    $('participant').addEventListener('change', () => { $('reveal').hidden = true; $('reveal').replaceChildren(); });
-    $('reveal-form').addEventListener('submit', event => {
-      event.preventDefault();
-      const id = $('participant').value;
-      const assignment = election.assignments.find(a => a.giverId === id);
-      if (!assignment) return;
-      const label = document.createElement('p'); label.textContent = 'Votre cadeau fera sourire…';
-      const name = document.createElement('h3'); name.textContent = names.get(assignment.recipientId);
-      const note = document.createElement('p'); note.textContent = 'Le plus beau cadeau, c’est l’attention que vous y mettez.';
-      $('reveal').replaceChildren(label, name, note);
-      if (election.bonus?.giverId === id) { const bonus = document.createElement('p'); bonus.className = 'bonus-result'; bonus.textContent = `✳ Vous êtes le Santa bonus ! Préparez aussi un deuxième cadeau pour ${names.get(election.bonus.recipientId)}.`; $('reveal').append(bonus); }
-      $('reveal').hidden = false;
-    });
+    const addAssignment = (assignment, isBonus = false) => {
+      const row = document.createElement('tr');
+      if (isBonus) row.className = 'bonus-assignment';
+      for (const text of [names.get(assignment.giverId), names.get(assignment.recipientId), isBonus ? 'Bonus · 2ᵉ cadeau' : 'Cadeau']) {
+        const cell = document.createElement('td');
+        cell.textContent = text;
+        row.append(cell);
+      }
+      $('assignments').append(row);
+    };
+    election.assignments.forEach(assignment => addAssignment(assignment));
+    if (election.bonus) {
+      addAssignment(election.bonus, true);
+      $('bonus-description').textContent = `${names.get(election.bonus.giverId)} est le Santa bonus et offre un deuxième cadeau à ${names.get(election.bonus.recipientId)}. Une surprise en plus à préparer !`;
+    }
+    $('assignments-summary').hidden = false;
     $('load-status').textContent = `Tirage du ${new Intl.DateTimeFormat('fr-FR', {dateStyle:'long', timeZone:'Europe/Paris'}).format(new Date(election.drawnAt))} · Les attributions sont enregistrées.`;
   } else {
     $('load-status').textContent = config.participantsAreExamples ? 'Édition en préparation · L’organisateur doit renseigner les participants avant le tirage.' : 'La liste est prête. Il ne manque plus qu’un peu de hasard.';
@@ -67,6 +68,6 @@ try {
   $('load-status').textContent = `Le site ne peut pas afficher cette édition : ${error.message}`;
   $('load-status').setAttribute('role', 'alert');
   $('organizer').hidden = true;
-  $('reveal-form').hidden = true;
+  $('assignments-summary').hidden = true;
   $('draw-status').textContent = 'Indisponible';
 }

@@ -21,7 +21,6 @@
         <p class="eyebrow"><span></span> LES PETITES ATTENTIONS FONT LES GRANDES FÊTES</p>
         <h1 id="title">Noël à<br>Morainvilliers</h1>
         <p id="subtitle" class="intro">Un prénom au hasard. Une attention bien choisie. Et un peu de magie à partager.</p>
-        <div class="hero-actions"><a class="button" href="#exchange">Découvrir mon destinataire <span aria-hidden="true">↗</span></a><span class="handwritten">À vous de jouer !</span></div>
       </div>
       <div class="art" role="img" aria-label="Trois cadeaux de Noël, décorés d’étoiles et de rubans">
         <span class="art-orbit"></span><span class="star s1">✧</span><span class="star s2">✳</span><span class="star s3">✦</span><span class="star s4">✧</span>
@@ -37,13 +36,15 @@
     <section class="dashboard">
       <div id="exchange" class="exchange card">
         <div class="section-top"><p class="eyebrow">LE GRAND ÉCHANGE</p><span id="draw-status" class="pill">En préparation</span></div>
-        <h2>À qui allez-vous<br>faire plaisir ?</h2>
-        <p class="muted" id="exchange-description">Le tirage se prépare. Revenez découvrir votre destinataire une fois la hotte mélangée.</p>
-        <form id="reveal-form" hidden>
-          <label for="participant">Je suis…</label>
-          <div class="select-row"><select id="participant" required><option value="">Choisir mon prénom</option></select><button class="button" type="submit">Découvrir <span aria-hidden="true">→</span></button></div>
-        </form>
-        <div id="reveal" class="reveal" aria-live="polite" hidden></div>
+        <h2>Qui offre à qui ?</h2>
+        <p class="muted" id="exchange-description">Le tirage se prépare. Le récapitulatif des cadeaux apparaîtra ici une fois les attributions enregistrées.</p>
+        <div id="assignments-summary" class="assignments-summary" hidden>
+          <table class="assignments-table">
+            <caption class="sr-only">Récapitulatif du tirage : donneurs et destinataires des cadeaux</caption>
+            <thead><tr><th scope="col">Qui offre</th><th scope="col">À qui</th><th scope="col">Cadeau</th></tr></thead>
+            <tbody id="assignments"></tbody>
+          </table>
+        </div>
         <div id="organizer" class="organizer" hidden>
           <a id="draw-link" class="button" href="https://github.com/lesjeanpierz/secretsanta/actions/workflows/draw.yml" target="_blank" rel="noopener">Lancer le tirage <span aria-hidden="true">↗</span></a>
           <p>Organisateur · connexion GitHub requise.<br>Dans GitHub, cliquez sur « Run workflow ».</p>
@@ -56,7 +57,7 @@
       <p id="examples" class="sample-note" hidden>Prénoms d’exemple : à remplacer dans participants.json avant le tirage.</p>
       <ul id="participants" class="participants"></ul>
     </section>
-    <details class="practical"><summary>Comment ça marche ? <span aria-hidden="true">+</span></summary><div><p>Chaque personne offre un cadeau à un participant différent d’elle-même et reçoit un cadeau. Si le bonus est activé, une personne tirée au sort offre un deuxième cadeau à un destinataire différent de son premier.</p><p>L’organisateur lance le tirage via GitHub Actions. Le résultat est enregistré dans <code>public/data/election.json</code>, puis le site est mis à jour automatiquement.</p><p>Ce dépôt est public : les attributions sont consultables dans le fichier JSON. Le choix d’un prénom sur cette page ne constitue pas une authentification.</p></div></details>
+    <details class="practical"><summary>Comment ça marche ? <span aria-hidden="true">+</span></summary><div><p>Chaque personne offre un cadeau à un participant différent d’elle-même et reçoit un cadeau. Si le bonus est activé, une personne tirée au sort offre un deuxième cadeau à un destinataire différent de son premier.</p><p>L’organisateur lance le tirage via GitHub Actions. Le résultat est enregistré dans <code>public/data/election.json</code>, puis le site est mis à jour automatiquement.</p><p>Ce dépôt est public : les attributions sont consultables dans le fichier JSON. Le récapitulatif du tirage est affiché à tous sur cette page.</p></div></details>
   </main>
   <footer class="wrap"><a class="brand" href="./">Secret Santa<span class="brand-dot">.</span></a><span>Fait avec attention · Noël à Morainvilliers.</span><a href="https://github.com/lesjeanpierz/secretsanta">Le projet sur GitHub ↗</a></footer>
 </body>
