@@ -1,0 +1,7 @@
+{
+  "name": "secretsanta",
+  "private": true,
+  "type": "module",
+  "scripts": {"test": "node --test", "draw": "node scripts/draw.mjs"},
+  "engines": {"node": ">=22"}
+}

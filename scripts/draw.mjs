@@ -1,0 +1,13 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { draw } from './lottery.mjs';
+const root = new URL('../public/data/', import.meta.url);
+const read = async name => JSON.parse(await readFile(new URL(name, root), 'utf8'));
+const [config, participants, existing] = await Promise.all(['config.json', 'participants.json', 'election.json'].map(read));
+if (config.showElectionButton !== true) throw new Error('Le tirage est désactivé dans config.json.');
+if (typeof config.bonusEnabled !== 'boolean') throw new Error('bonusEnabled doit être un booléen.');
+if (config.participantsAreExamples !== false) throw new Error('Remplacez les participants exemples et mettez participantsAreExamples à false avant le tirage.');
+if (existing !== null) throw new Error('Un tirage existe déjà. Remettez election.json à null pour une nouvelle édition.');
+const election = draw(participants, config.bonusEnabled);
+await writeFile(new URL('election.json', root), JSON.stringify(election, null, 2) + '\n');
+await writeFile(new URL('config.json', root), JSON.stringify({...config, showElectionButton: false}, null, 2) + '\n');
+console.log('Tirage enregistré. Le bouton est maintenant masqué.');

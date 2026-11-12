@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173e32">
+  <meta name="description" content="Le Secret Santa des Jeanpierz : un tirage au sort, des cadeaux et une surprise bonus.">
+  <title>Secret Santa · Les Jeanpierz</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar wrap">
+    <a class="brand" href="./" aria-label="Secret Santa, accueil"><span class="brand-icon" aria-hidden="true">✳</span> Secret Santa<span class="brand-dot">.</span></a>
+    <span class="edition">LES JEANPIERZ <span aria-hidden="true"> / </span> ÉDITION DE NOËL</span>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> LES PETITES ATTENTIONS FONT LES GRANDES FÊTES</p>
+        <h1 id="title">Le Noël<br>des Jeanpierz</h1>
+        <p id="subtitle" class="intro">Un prénom au hasard. Une attention bien choisie. Et un peu de magie à partager.</p>
+        <div class="hero-actions"><a class="button" href="#exchange">Découvrir mon destinataire <span aria-hidden="true">↗</span></a><span class="handwritten">À vous de jouer !</span></div>
+      </div>
+      <div class="art" role="img" aria-label="Trois cadeaux de Noël, décorés d’étoiles et de rubans">
+        <span class="art-orbit"></span><span class="star s1">✧</span><span class="star s2">✳</span><span class="star s3">✦</span><span class="star s4">✧</span>
+        <span class="art-label">LA MAGIE EST DANS L’ATTENTION</span>
+        <div class="gift gift-back"><i class="lid"></i><i class="ribbon"></i><i class="bow bow-left"></i><i class="bow bow-right"></i></div>
+        <div class="gift gift-front"><i class="lid"></i><i class="ribbon"></i><i class="bow bow-left"></i><i class="bow bow-right"></i><span class="tag">pour toi ♡</span></div>
+        <div class="gift gift-small"><i class="lid"></i><i class="ribbon"></i></div>
+        <span class="art-note">Un cadeau. Beaucoup de sourires.</span>
+      </div>
+    </section>
+    <div class="rule-strip"><span>01 <b>Un prénom tiré au sort</b></span><span>02 <b>Un cadeau à préparer</b></span><span>03 <b>Une surprise bonus</b></span></div>
+    <p id="load-status" class="notice" role="status">Chargement de la hotte…</p>
+    <section class="dashboard">
+      <div id="exchange" class="exchange card">
+        <div class="section-top"><p class="eyebrow">LE GRAND ÉCHANGE</p><span id="draw-status" class="pill">En préparation</span></div>
+        <h2>À qui allez-vous<br>faire plaisir ?</h2>
+        <p class="muted" id="exchange-description">Le tirage se prépare. Revenez découvrir votre destinataire une fois la hotte mélangée.</p>
+        <form id="reveal-form" hidden>
+          <label for="participant">Je suis…</label>
+          <div class="select-row"><select id="participant" required><option value="">Choisir mon prénom</option></select><button class="button" type="submit">Découvrir <span aria-hidden="true">→</span></button></div>
+        </form>
+        <div id="reveal" class="reveal" aria-live="polite" hidden></div>
+        <div id="organizer" class="organizer" hidden>
+          <a id="draw-link" class="button" href="https://github.com/lesjeanpierz/secretsanta/actions/workflows/draw.yml" target="_blank" rel="noopener">Lancer le tirage <span aria-hidden="true">↗</span></a>
+          <p>Organisateur · connexion GitHub requise.<br>Dans GitHub, cliquez sur « Run workflow ».</p>
+        </div>
+      </div>
+      <aside class="bonus card"><span class="bonus-icon" aria-hidden="true">✳</span><p class="eyebrow">LE PETIT PLUS DE NOËL</p><h2>Un Santa.<br>Deux cadeaux.</h2><p id="bonus-description">Le hasard choisira un Santa bonus : il offrira un deuxième cadeau à une autre personne. Deux fois plus d’occasions de faire sourire.</p><span id="bonus-label" class="bonus-label">1 DONNEUR BONUS · 1 SURPRISE EN PLUS</span></aside>
+    </section>
+    <section class="participants-section" aria-labelledby="participants-title">
+      <div class="participants-heading"><div><p class="eyebrow">LA JOYEUSE ÉQUIPE</p><h2 id="participants-title">Tout le monde dans la hotte.</h2></div><span id="count" class="count">— participants</span></div>
+      <p id="examples" class="sample-note" hidden>Prénoms d’exemple : à remplacer dans participants.json avant le tirage.</p>
+      <ul id="participants" class="participants"></ul>
+    </section>
+    <details class="practical"><summary>Comment ça marche ? <span aria-hidden="true">+</span></summary><div><p>Chaque personne offre un cadeau à un participant différent d’elle-même et reçoit un cadeau. Si le bonus est activé, une personne tirée au sort offre un deuxième cadeau à un destinataire différent de son premier.</p><p>L’organisateur lance le tirage via GitHub Actions. Le résultat est enregistré dans <code>public/data/election.json</code>, puis le site est mis à jour automatiquement.</p><p>Ce dépôt est public : les attributions sont consultables dans le fichier JSON. Le choix d’un prénom sur cette page ne constitue pas une authentification.</p></div></details>
+  </main>
+  <footer class="wrap"><a class="brand" href="./">Secret Santa<span class="brand-dot">.</span></a><span>Fait avec attention, pour les Jeanpierz.</span><a href="https://github.com/lesjeanpierz/secretsanta">Le projet sur GitHub ↗</a></footer>
+</body>
+</html>
