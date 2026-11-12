@@ -1,8 +1,12 @@
 [
-  {"id": "alice", "name": "Alice"},
-  {"id": "bastien", "name": "Bastien"},
-  {"id": "camille", "name": "Camille"},
-  {"id": "david", "name": "David"},
-  {"id": "emma", "name": "Emma"},
-  {"id": "felix", "name": "Félix"}
+  {"id": "mamie", "name": "Mamiecheline"},
+  {"id": "xavier", "name": "Xavier"},
+  {"id": "annie", "name": "Annie"},
+  {"id": "philippe", "name": "Philippe"},
+  {"id": "carole", "name": "Carole"},
+  {"id": "jeanpierre", "name": "Jean-Pierre"}
+  {"id": "isabelle", "name": "Isabelle"}
+  {"id": "lucas", "name": "Lucas"}
+  {"id": "thomas", "name": "Thomas"}
+  {"id": "antoine", "name": "Antoine"}
 ]
