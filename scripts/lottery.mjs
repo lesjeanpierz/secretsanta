@@ -16,32 +16,25 @@ export function validateParticipants(participants) {
 export function draw(participants, chooseIndex = randomInt) {
   validateParticipants(participants);
   const ids = participants.map(p => p.id);
-  const odd = ids.length % 2 === 1;
   let assignments;
-  let bonus;
-  // A full restart handles the even case where only the last giver remains.
+  // Restart if the only remaining recipient is the final giver.
   do {
     const selected = new Set();
     assignments = [];
-    bonus = null;
     for (let i = 0; i < ids.length; i++) {
       const giverId = ids[i];
-      const finalOdd = odd && i === ids.length - 1;
-      const eligible = ids.filter(id => id !== giverId && (finalOdd || !selected.has(id)));
+      const eligible = ids.filter(id => id !== giverId && !selected.has(id));
       if (eligible.length === 0) break;
       const recipientId = eligible[chooseIndex(eligible.length)];
       const assignment = {giverId, recipientId};
-      if (finalOdd && selected.has(recipientId)) bonus = {...assignment};
       assignments.push(assignment);
       selected.add(recipientId);
     }
   } while (assignments.length !== ids.length);
-  // bonus describes a duplicate recipient in the last assignment, not an extra gift.
   return {
-    version: 3,
+    version: 4,
     drawnAt: new Date().toISOString(),
     participants: participants.map(({id, name}) => ({id, name})),
-    assignments,
-    bonus
+    assignments
   };
 }

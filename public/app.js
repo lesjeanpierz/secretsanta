@@ -10,38 +10,9 @@ function validateList(list) {
 function validateElection(election) {
   validateList(election.participants);
   const ids = new Set(election.participants.map(p => p.id));
-  if (![1, 2, 3].includes(election.version) || !Number.isFinite(Date.parse(election.drawnAt)) || !Array.isArray(election.assignments) || election.assignments.length !== ids.size || ids.size < 2) throw new Error('Format du tirage invalide.');
-  const validPair = a => a && ids.has(a.giverId) && ids.has(a.recipientId) && a.giverId !== a.recipientId;
-  if (election.assignments.some(a => !validPair(a)) || new Set(election.assignments.map(a => a.giverId)).size !== ids.size) throw new Error('Attributions invalides.');
-  const recipients = new Map(election.assignments.map(a => [a.giverId, a.recipientId]));
-  if (election.version === 1) {
-    // Keep the previous published draw readable until the organizer reruns it.
-    if (new Set(recipients.values()).size !== ids.size) throw new Error('Attributions invalides.');
-    if (election.bonus !== null && (!validPair(election.bonus) || recipients.get(election.bonus.giverId) === election.bonus.recipientId)) throw new Error('Attribution bonus invalide.');
-  } else if (election.version === 2) {
-    const odd = ids.size % 2 === 1;
-    const lastId = election.participants.at(-1).id;
-    if (odd ? (!validPair(election.bonus) || election.bonus.giverId !== lastId || recipients.get(lastId) !== election.bonus.recipientId) : election.bonus !== null) throw new Error('Attribution bonus invalide.');
-    for (const a of election.assignments) {
-      if (odd && a.giverId === lastId) continue;
-      if ((odd && a.recipientId === lastId) || recipients.get(a.recipientId) !== a.giverId) throw new Error('Ancien tirage invalide.');
-    }
-  } else {
-    const selected = new Set();
-    let expectedBonus = null;
-    election.assignments.forEach((a, index) => {
-      if (a.giverId !== election.participants[index].id) throw new Error('Ordre du tirage invalide.');
-      const finalOdd = ids.size % 2 === 1 && index === ids.size - 1;
-      if (selected.has(a.recipientId)) {
-        if (!finalOdd) throw new Error('Destinataire déjà choisi.');
-        expectedBonus = a;
-      }
-      selected.add(a.recipientId);
-    });
-    if (expectedBonus
-      ? (!validPair(election.bonus) || election.bonus.giverId !== expectedBonus.giverId || election.bonus.recipientId !== expectedBonus.recipientId)
-      : election.bonus !== null) throw new Error('Attribution bonus invalide.');
-  }
+  if (election.version !== 4 || !Number.isFinite(Date.parse(election.drawnAt)) || !Array.isArray(election.assignments) || election.assignments.length !== ids.size || ids.size < 2) throw new Error('Format du tirage invalide.');
+  const validAssignment = a => a && ids.has(a.giverId) && ids.has(a.recipientId) && a.giverId !== a.recipientId;
+  if (election.assignments.some(a => !validAssignment(a)) || new Set(election.assignments.map(a => a.giverId)).size !== ids.size || new Set(election.assignments.map(a => a.recipientId)).size !== ids.size) throw new Error('Chaque participant doit offrir et recevoir exactement un cadeau.');
 }
 
 try {
@@ -60,35 +31,21 @@ try {
     const avatar = document.createElement('span'); avatar.className = 'avatar'; avatar.setAttribute('aria-hidden', 'true'); avatar.textContent = Array.from(person.name)[0].toLocaleUpperCase('fr');
     li.append(avatar, document.createTextNode(person.name)); $('participants').append(li);
   }
-  const bonusEnabled = election ? election.bonus !== null : list.length % 2 === 1;
-  if (!bonusEnabled) {
-    $('bonus-description').textContent = 'Chaque personne offre et reçoit un cadeau. Aucun destinataire n’est sélectionné deux fois.';
-    $('bonus-label').textContent = 'UNE ATTENTION POUR CHACUN';
-    document.querySelector('.bonus h2').textContent = 'À chacun son cadeau.';
-    document.querySelector('.rule-strip span:last-child b').textContent = 'Des sourires à partager';
-  }
   $('organizer').hidden = !config.showElectionButton || election !== null;
   if (election) {
     $('draw-status').textContent = 'Tirage terminé';
     $('exchange-description').textContent = 'Les cadeaux ont trouvé leur destinataire ! Retrouvez toutes les attributions ci-dessous.';
     const names = new Map(list.map(p => [p.id, p.name]));
-    const addAssignment = (assignment, isBonus = false) => {
+    const addAssignment = assignment => {
       const row = document.createElement('tr');
-      if (isBonus) row.className = 'bonus-assignment';
-      for (const text of [names.get(assignment.giverId), names.get(assignment.recipientId), isBonus ? 'Cadeau bonus' : 'Cadeau']) {
+      for (const text of [names.get(assignment.giverId), names.get(assignment.recipientId)]) {
         const cell = document.createElement('td');
         cell.textContent = text;
         row.append(cell);
       }
       $('assignments').append(row);
     };
-    election.assignments.forEach(assignment => addAssignment(assignment, election.version >= 2 && election.bonus?.giverId === assignment.giverId));
-    if (election.bonus) {
-      if (election.version === 1) addAssignment(election.bonus, true);
-      $('bonus-description').textContent = election.version >= 2
-        ? `${names.get(election.bonus.giverId)} offre son cadeau à ${names.get(election.bonus.recipientId)}, déjà choisi par un autre participant. ${names.get(election.bonus.recipientId)} reçoit donc deux cadeaux.`
-        : `${names.get(election.bonus.giverId)} offre un deuxième cadeau à ${names.get(election.bonus.recipientId)}. Ce résultat suit l’ancienne règle ; le prochain tirage utilisera le choix successif des destinataires.`;
-    }
+    election.assignments.forEach(addAssignment);
     $('assignments-summary').hidden = false;
     $('load-status').textContent = `Tirage du ${new Intl.DateTimeFormat('fr-FR', {dateStyle:'long', timeZone:'Europe/Paris'}).format(new Date(election.drawnAt))} · Les attributions sont enregistrées.`;
   } else {

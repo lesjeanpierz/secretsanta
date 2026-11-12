@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173e32">
-  <meta name="description" content="Noël à Morainvilliers : un tirage au sort, des cadeaux et une surprise bonus.">
+  <meta name="description" content="Noël à Morainvilliers : un tirage au sort et un cadeau pour chacun.">
   <title>Secret Santa · Noël à Morainvilliers</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
@@ -31,7 +31,7 @@
         <span class="art-note">Un cadeau. Beaucoup de sourires.</span>
       </div>
     </section>
-    <div class="rule-strip"><span>01 <b>Un prénom tiré au sort</b></span><span>02 <b>Un cadeau à préparer</b></span><span>03 <b>Une surprise bonus</b></span></div>
+    <div class="rule-strip"><span>01 <b>Un prénom tiré au sort</b></span><span>02 <b>Un cadeau à préparer</b></span><span>03 <b>Des sourires à partager</b></span></div>
     <aside class="budget-note" aria-labelledby="budget-title">
       <h2 id="budget-title">Côté Berlequin…</h2>
       <p>Nous avons convenu d’une fourchette de <strong>20 à 35 € par cadeau</strong>. Mais vous faites comme vous pouvez car c'est l'attention qui compte et pas l'embonpoint du berlequin😉</p>
@@ -45,7 +45,7 @@
         <div id="assignments-summary" class="assignments-summary" hidden>
           <table class="assignments-table">
             <caption class="sr-only">Récapitulatif du tirage : donneurs et destinataires des cadeaux</caption>
-            <thead><tr><th scope="col">Qui offre</th><th scope="col">À qui</th><th scope="col">Cadeau</th></tr></thead>
+            <thead><tr><th scope="col">Qui offre</th><th scope="col">À qui</th></tr></thead>
             <tbody id="assignments"></tbody>
           </table>
         </div>
@@ -54,14 +54,14 @@
           <p>Organisateur · connexion GitHub requise.<br>Dans GitHub, cliquez sur « Run workflow ».</p>
         </div>
       </div>
-      <aside class="bonus card"><span class="bonus-icon" aria-hidden="true">✳</span><p class="eyebrow">LE PETIT PLUS DE NOËL</p><h2>Un tirage.<br>Une surprise en plus ?</h2><p id="bonus-description">Si la liste est impaire, la dernière personne choisit au hasard parmi tous les autres, même ceux déjà sélectionnés. Si le destinataire a déjà été choisi, il reçoit deux cadeaux.</p><span id="bonus-label" class="bonus-label">UN BONUS UNIQUEMENT SI LA LISTE EST IMPAIRE</span></aside>
+      <aside class="gift-note card"><span class="gift-note-icon" aria-hidden="true">✳</span><p class="eyebrow">UNE ATTENTION POUR CHACUN</p><h2>À chacun<br>son cadeau.</h2><p>Chaque participant offre un cadeau à une autre personne et reçoit exactement un cadeau. Il ne reste plus qu’à trouver l’attention qui fera sourire !</p><span class="gift-note-label">UN CADEAU OFFERT · UN CADEAU REÇU</span></aside>
     </section>
     <section class="participants-section" aria-labelledby="participants-title">
       <div class="participants-heading"><div><p class="eyebrow">LA JOYEUSE ÉQUIPE</p><h2 id="participants-title">Tout le monde dans la hotte.</h2></div><span id="count" class="count">— participants</span></div>
       <p id="examples" class="sample-note" hidden>Prénoms d’exemple : à remplacer dans participants.json avant le tirage.</p>
       <ul id="participants" class="participants"></ul>
     </section>
-    <details class="practical"><summary>Comment ça marche ? <span aria-hidden="true">+</span></summary><div><p>Dans l’ordre de la liste, chaque participant offre un cadeau à une personne tirée au sort parmi celles qui n’ont pas encore été choisies, en s’excluant lui-même. Si la liste est impaire, le dernier participant choisit parmi tous les autres, même ceux déjà sélectionnés : il peut ainsi attribuer un deuxième cadeau à un destinataire. Le dernier participant peut lui-même avoir été choisi auparavant. Personne ne s’offre de cadeau à soi-même.</p><p>L’organisateur lance le tirage via GitHub Actions. Le résultat est enregistré dans <code>public/data/election.json</code>, puis le site est mis à jour automatiquement.</p><p>Ce dépôt est public : les attributions sont consultables dans le fichier JSON. Le récapitulatif du tirage est affiché à tous sur cette page.</p></div></details>
+    <details class="practical"><summary>Comment ça marche ? <span aria-hidden="true">+</span></summary><div><p>Chaque participant offre un cadeau à une autre personne et reçoit exactement un cadeau, que le nombre de participants soit pair ou impair. Personne ne s’offre de cadeau à soi-même.</p><p>L’organisateur lance le tirage via GitHub Actions. Le résultat est enregistré dans <code>public/data/election.json</code>, puis le site est mis à jour automatiquement.</p><p>Ce dépôt est public : les attributions sont consultables dans le fichier JSON. Le récapitulatif du tirage est affiché à tous sur cette page.</p></div></details>
   </main>
   <footer class="wrap"><a class="brand" href="./">Secret Santa<span class="brand-dot">.</span></a><span>Fait avec attention · Noël à Morainvilliers.</span><a href="https://github.com/lesjeanpierz/secretsanta">Le projet sur GitHub ↗</a></footer>
 </body>

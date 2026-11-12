@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "drawnAt": "2026-11-12T14:34:37.431Z",
   "participants": [
     {
@@ -90,10 +90,7 @@
     },
     {
       "giverId": "antoine",
-      "recipientId": "celina"
-    },
-    {
-    "giverId": "antoine",
-    "recipientId": "thomas"
+      "recipientId": "thomas"
     }
-  ]}
+  ]
+}
