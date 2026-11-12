@@ -13,34 +13,35 @@ export function validateParticipants(participants) {
   }
 }
 
-export function draw(participants) {
+export function draw(participants, chooseIndex = randomInt) {
   validateParticipants(participants);
   const ids = participants.map(p => p.id);
   const odd = ids.length % 2 === 1;
-  // With an odd count, the final JSON participant remains outside the pairs.
-  const paired = odd ? ids.slice(0, -1) : [...ids];
-  for (let i = paired.length - 1; i > 0; i--) {
-    const j = randomInt(i + 1);
-    [paired[i], paired[j]] = [paired[j], paired[i]];
-  }
-  const recipients = new Map();
-  for (let i = 0; i < paired.length; i += 2) {
-    recipients.set(paired[i], paired[i + 1]);
-    recipients.set(paired[i + 1], paired[i]);
-  }
-  let bonus = null;
-  if (odd) {
-    const giverId = ids.at(-1);
-    const eligible = ids.slice(0, -1);
-    bonus = {giverId, recipientId: eligible[randomInt(eligible.length)]};
-    recipients.set(giverId, bonus.recipientId);
-  }
-  // The bonus is metadata about the final assignment, not an extra gift.
+  let assignments;
+  let bonus;
+  // A full restart handles the even case where only the last giver remains.
+  do {
+    const selected = new Set();
+    assignments = [];
+    bonus = null;
+    for (let i = 0; i < ids.length; i++) {
+      const giverId = ids[i];
+      const finalOdd = odd && i === ids.length - 1;
+      const eligible = ids.filter(id => id !== giverId && (finalOdd || !selected.has(id)));
+      if (eligible.length === 0) break;
+      const recipientId = eligible[chooseIndex(eligible.length)];
+      const assignment = {giverId, recipientId};
+      if (finalOdd && selected.has(recipientId)) bonus = {...assignment};
+      assignments.push(assignment);
+      selected.add(recipientId);
+    }
+  } while (assignments.length !== ids.length);
+  // bonus describes a duplicate recipient in the last assignment, not an extra gift.
   return {
-    version: 2,
+    version: 3,
     drawnAt: new Date().toISOString(),
     participants: participants.map(({id, name}) => ({id, name})),
-    assignments: ids.map(giverId => ({giverId, recipientId: recipients.get(giverId)})),
+    assignments,
     bonus
   };
 }

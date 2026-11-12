@@ -25,9 +25,11 @@ test('Le script enregistre une seule élection et respecte les paramètres', asy
     const first = run(); assert.equal(first.status, 0, first.stderr);
     const result = await get('election');
     assert.equal(result.assignments.length, 3);
-    assert.equal(result.version, 2);
-    assert.equal(result.bonus.giverId, 'c');
-    assert.deepEqual(result.assignments.at(-1), result.bonus);
+    assert.equal(result.version, 3);
+    if (result.bonus) {
+      assert.equal(result.bonus.giverId, 'c');
+      assert.deepEqual(result.assignments.at(-1), result.bonus);
+    }
     assert.equal((await get('config')).showElectionButton, false);
     await set('config', config);
     assert.notEqual(run().status, 0);
