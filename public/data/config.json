@@ -1,7 +1,7 @@
 {
   "title": "Un Noël à Morainvilliers",
   "subtitle": "Un prénom au hasard. Une attention bien choisie. Et un peu de joie à partager.",
-  "showElectionButton": true,
+  "showElectionButton": false,
   "bonusEnabled": true,
   "participantsAreExamples": false
 }

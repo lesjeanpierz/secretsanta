@@ -1,1 +1,92 @@
-null
+{
+  "version": 1,
+  "drawnAt": "2026-11-12T13:14:30.937Z",
+  "participants": [
+    {
+      "id": "mamie",
+      "name": "Mamiecheline"
+    },
+    {
+      "id": "xavier",
+      "name": "Xavier"
+    },
+    {
+      "id": "annie",
+      "name": "Annie"
+    },
+    {
+      "id": "philippe",
+      "name": "Philippe"
+    },
+    {
+      "id": "carole",
+      "name": "Carole"
+    },
+    {
+      "id": "jeanpierre",
+      "name": "Jean-Pierre"
+    },
+    {
+      "id": "isabelle",
+      "name": "Isabelle"
+    },
+    {
+      "id": "lucas",
+      "name": "Lucas"
+    },
+    {
+      "id": "thomas",
+      "name": "Thomas"
+    },
+    {
+      "id": "antoine",
+      "name": "Antoine"
+    }
+  ],
+  "assignments": [
+    {
+      "giverId": "mamie",
+      "recipientId": "antoine"
+    },
+    {
+      "giverId": "xavier",
+      "recipientId": "carole"
+    },
+    {
+      "giverId": "annie",
+      "recipientId": "xavier"
+    },
+    {
+      "giverId": "philippe",
+      "recipientId": "isabelle"
+    },
+    {
+      "giverId": "carole",
+      "recipientId": "thomas"
+    },
+    {
+      "giverId": "jeanpierre",
+      "recipientId": "annie"
+    },
+    {
+      "giverId": "isabelle",
+      "recipientId": "jeanpierre"
+    },
+    {
+      "giverId": "lucas",
+      "recipientId": "mamie"
+    },
+    {
+      "giverId": "thomas",
+      "recipientId": "lucas"
+    },
+    {
+      "giverId": "antoine",
+      "recipientId": "philippe"
+    }
+  ],
+  "bonus": {
+    "giverId": "annie",
+    "recipientId": "antoine"
+  }
+}
