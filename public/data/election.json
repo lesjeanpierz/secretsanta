@@ -91,10 +91,9 @@
     {
       "giverId": "antoine",
       "recipientId": "celina"
-    }
-  ],
-  "bonus": {
+    },
+    {
     "giverId": "antoine",
     "recipientId": "thomas"
-  }
-}
+    }
+  ]}
