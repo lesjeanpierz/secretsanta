@@ -13,7 +13,7 @@ test('Le script enregistre une seule élection et respecte les paramètres', asy
     const set = (name, value) => writeFile(file(name), JSON.stringify(value));
     const get = async name => JSON.parse(await readFile(file(name),'utf8'));
     const run = () => spawnSync(process.execPath, [join(dir,'scripts/draw.mjs')], {encoding:'utf8'});
-    const config = {showElectionButton:true, bonusEnabled:true, participantsAreExamples:false};
+    const config = {showElectionButton:true, participantsAreExamples:false};
     await set('participants', [{id:'a',name:'A'},{id:'b',name:'B'},{id:'c',name:'C'}]);
     await set('election', null);
     await set('config', {...config, participantsAreExamples:true});
@@ -25,7 +25,9 @@ test('Le script enregistre une seule élection et respecte les paramètres', asy
     const first = run(); assert.equal(first.status, 0, first.stderr);
     const result = await get('election');
     assert.equal(result.assignments.length, 3);
-    assert.ok(result.bonus);
+    assert.equal(result.version, 2);
+    assert.equal(result.bonus.giverId, 'c');
+    assert.deepEqual(result.assignments.at(-1), result.bonus);
     assert.equal((await get('config')).showElectionButton, false);
     await set('config', config);
     assert.notEqual(run().status, 0);
